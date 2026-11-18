@@ -76,14 +76,21 @@ class MyCheckboxFrame(ctk.CTkFrame):
 
 
 class MyDynamicCheckBoxFrame(ctk.CTkFrame):
-    def __init__(self, master, values):
+    def __init__(self, master, title, values):
         super().__init__(master)
+        self.grid_columnconfigure(0, weight=1)
         self.values = values
+        self.title = title
         self.checkboxses = []
+
+        self.title = ctk.CTkLabel(
+            self, text=self.title, fg_color="gray30", corner_radius=6
+        )
+        self.title.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="ew")
 
         for i, value in enumerate(self.values):
             checkbox = ctk.CTkCheckBox(self, text=value)
-            checkbox.grid(row=i, column=0, padx=10, pady=(10, 0), sticky="w")
+            checkbox.grid(row=i + 1, column=0, padx=10, pady=(10, 0), sticky="w")
             self.checkboxses.append(checkbox)
 
     def get(self):
@@ -122,14 +129,19 @@ class DynamicFrameApp(ctk.CTk):
         super().__init__()
 
         self.title("DynamicFrameApp")
-        self.geometry("400x180")
-        self.grid_columnconfigure(0, weight=1)
+        self.geometry("400x220")
+        self.grid_columnconfigure((0, 1), weight=1)
         self.grid_rowconfigure(0, weight=1)
 
-        self.checkbox_frame = MyDynamicCheckBoxFrame(
-            self, values=["value 1", "value 2", "value 3"]
+        self.checkbox_frame1 = MyDynamicCheckBoxFrame(
+            self, "Values", values=["value 1", "value 2", "value 3"]
         )
-        self.checkbox_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsw")
+        self.checkbox_frame1.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsew")
+
+        self.checkbox_frame2 = MyDynamicCheckBoxFrame(
+            self, "Options", values=["Option 1", "Option 2"]
+        )
+        self.checkbox_frame2.grid(row=0, column=1, padx=10, pady=(10, 0), sticky="nsew")
 
         self.button = ctk.CTkButton(
             self, text="my button", command=self.button_callback
@@ -137,4 +149,5 @@ class DynamicFrameApp(ctk.CTk):
         self.button.grid(row=3, column=0, padx=10, pady=10, sticky="ew", columnspan=2)
 
     def button_callback(self):
-        print("Checked checkboxses: ", self.checkbox_frame.get())
+        print("Checked checkboxses: ", self.checkbox_frame1.get())
+        print("Checked checkboxses: ", self.checkbox_frame2.get())
