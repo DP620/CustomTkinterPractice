@@ -1,5 +1,9 @@
 import Classes as cl
 
-app = cl.App()
+greetapp = cl.greetApp()
 
-app.mainloop()
+greetapp.mainloop()
+
+gridapp = cl.gridApp()
+
+gridapp.mainloop()
