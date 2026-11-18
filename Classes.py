@@ -33,11 +33,16 @@ class gridApp(ctk.CTk):
 
         self.title("my app")
         self.geometry("400x150")
+        self.grid_columnconfigure(0, weight=1)
 
         self.button = ctk.CTkButton(
             self, text="my button", command=self.button_callback
         )
-        self.button.grid(row=0, column=0, padx=20, pady=20)
+        self.button.grid(row=0, column=0, padx=20, pady=20, sticky="ew", columnspan=2)
+        self.checkbox1 = ctk.CTkCheckBox(self, text="Checkbox 1")
+        self.checkbox1.grid(row=1, column=0, padx=20, pady=(0, 20), sticky="w")
+        self.checkbox2 = ctk.CTkCheckBox(self, text="Checkbox 2")
+        self.checkbox2.grid(row=1, column=1, padx=20, pady=(0, 20), sticky="w")
 
     def button_callback(self):
         print("Button pressed")
