@@ -1,11 +1,11 @@
 import customtkinter as ctk
 
 
-class greetApp(ctk.CTk):
+class GreetApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("Greeting")
+        self.title("GreetApp")
         self.geometry("360x180")
         self.grid_columnconfigure(0, weight=1)
 
@@ -32,11 +32,11 @@ class greetApp(ctk.CTk):
         super().destroy()
 
 
-class gridApp(ctk.CTk):
+class GridApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("my app")
+        self.title("GridApp")
         self.geometry("400x150")
         self.grid_columnconfigure(0, weight=1)
 
@@ -64,23 +64,77 @@ class MyCheckboxFrame(ctk.CTkFrame):
         self.checkbox3 = ctk.CTkCheckBox(self, text="Checkbox 3")
         self.checkbox3.grid(row=2, column=0, padx=10, pady=(10, 0), sticky="w")
 
+    def get(self):
+        checked_checkboxses = []
+        if self.checkbox1.get() == 1:
+            checked_checkboxses.append(self.checkbox1.cget("text"))
+        if self.checkbox2.get() == 1:
+            checked_checkboxses.append(self.checkbox2.cget("text"))
+        if self.checkbox3.get() == 1:
+            checked_checkboxses.append(self.checkbox3.cget("text"))
+        return checked_checkboxses
 
-class frameApp(ctk.CTk):
+
+class MyDynamicCheckBoxFrame(ctk.CTkFrame):
+    def __init__(self, master, values):
+        super().__init__(master)
+        self.values = values
+        self.checkboxses = []
+
+        for i, value in enumerate(self.values):
+            checkbox = ctk.CTkCheckBox(self, text=value)
+            checkbox.grid(row=i, column=0, padx=10, pady=(10, 0), sticky="w")
+            self.checkboxses.append(checkbox)
+
+    def get(self):
+        checked_checkboxses = []
+        for checkbox in self.checkboxses:
+            if checkbox.get() == 1:
+                checked_checkboxses.append(checkbox.cget("text"))
+        return checked_checkboxses
+
+
+class FrameApp(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("my app")
+        self.title("FrameApp")
         self.geometry("400x180")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
         self.checkbox_frame = MyCheckboxFrame(self)
         self.checkbox_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsw")
+        self.checkbox_frame2 = MyCheckboxFrame(self)
+        self.checkbox_frame2.grid(row=0, column=1, padx=10, pady=(10, 0), sticky="nsw")
 
         self.button = ctk.CTkButton(
             self, text="my button", command=self.button_callback
         )
-        self.button.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
+        self.button.grid(row=3, column=0, padx=10, pady=10, sticky="ew", columnspan=2)
 
     def button_callback(self):
-        print("Button pressed")
+        print("Checked checkboxses: ", self.checkbox_frame.get())
+
+
+class DynamicFrameApp(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("DynamicFrameApp")
+        self.geometry("400x180")
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+
+        self.checkbox_frame = MyDynamicCheckBoxFrame(
+            self, values=["value 1", "value 2", "value 3"]
+        )
+        self.checkbox_frame.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="nsw")
+
+        self.button = ctk.CTkButton(
+            self, text="my button", command=self.button_callback
+        )
+        self.button.grid(row=3, column=0, padx=10, pady=10, sticky="ew", columnspan=2)
+
+    def button_callback(self):
+        print("Checked checkboxses: ", self.checkbox_frame.get())

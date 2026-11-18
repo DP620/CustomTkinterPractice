@@ -1,10 +1,13 @@
 import Classes as cl
 
-greetapp = cl.greetApp()
+greetapp = cl.GreetApp()
 greetapp.mainloop()
 
-gridapp = cl.gridApp()
+gridapp = cl.GridApp()
 gridapp.mainloop()
 
-frameapp = cl.frameApp()
+frameapp = cl.FrameApp()
 frameapp.mainloop()
+
+DynamicFrameApp = cl.DynamicFrameApp()
+DynamicFrameApp.mainloop()
