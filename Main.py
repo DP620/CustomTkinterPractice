@@ -5,3 +5,6 @@ greetapp.mainloop()
 
 gridapp = cl.gridApp()
 gridapp.mainloop()
+
+frameapp = cl.frameApp()
+frameapp.mainloop()
