@@ -158,7 +158,8 @@ class LoginForm(ctk.CTk):
         super().__init__()
 
         self.title("Login Form")
-        self.geometry("200x300")
+        self.geometry("400x300")
+        self.resizable(False, False)
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(5, weight=1)
