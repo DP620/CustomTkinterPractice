@@ -151,3 +151,40 @@ class DynamicFrameApp(ctk.CTk):
     def button_callback(self):
         print("Checked checkboxses: ", self.checkbox_frame1.get())
         print("Checked checkboxses: ", self.checkbox_frame2.get())
+
+
+class LoginForm(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("Login Form")
+        self.geometry("200x300")
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(5, weight=1)
+
+        self.entry = ctk.CTkEntry(self, placeholder_text="Enter your username.")
+        self.entry.grid(row=1, column=0, padx=20, pady=(0, 5), sticky="ew")
+        self.entry.bind("<Return>", self.greet)
+
+        self.entry2 = ctk.CTkEntry(self, placeholder_text="Enter your password.")
+        self.entry2.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
+        self.entry2.bind("<Return>", self.greet)
+
+        self.button = ctk.CTkButton(self, text="Login", command=self.greet)
+        self.button.grid(row=3, column=0, padx=20, pady=(5, 10), sticky="ew")
+
+        self.label = ctk.CTkLabel(self, text="")
+        self.label.grid(row=4, column=0, padx=20, pady=(5, 0))
+
+    def greet(self, event=None):
+        name = self.entry.get().strip()
+        if name:
+            self.label.configure(text=f"Hello, {name}!")
+        else:
+            self.label.configure(text="Please enter your name.")
+
+    def destroy(self):
+        for after_id in self.tk.eval("after info").split():
+            self.after_cancel(after_id)
+        super().destroy()
