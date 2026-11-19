@@ -165,24 +165,28 @@ class LoginForm(ctk.CTk):
 
         self.entry = ctk.CTkEntry(self, placeholder_text="Enter your username.")
         self.entry.grid(row=1, column=0, padx=20, pady=(0, 5), sticky="ew")
-        self.entry.bind("<Return>", self.greet)
+        self.entry.bind("<Return>", self.signin)
 
-        self.entry2 = ctk.CTkEntry(self, placeholder_text="Enter your password.")
+        self.entry2 = ctk.CTkEntry(
+            self, placeholder_text="Enter your password.", show="*"
+        )
         self.entry2.grid(row=2, column=0, padx=20, pady=5, sticky="ew")
-        self.entry2.bind("<Return>", self.greet)
+        self.entry2.bind("<Return>", self.signin)
 
-        self.button = ctk.CTkButton(self, text="Login", command=self.greet)
+        self.button = ctk.CTkButton(self, text="Login", command=self.signin)
         self.button.grid(row=3, column=0, padx=20, pady=(5, 10), sticky="ew")
 
         self.label = ctk.CTkLabel(self, text="")
         self.label.grid(row=4, column=0, padx=20, pady=(5, 0))
 
-    def greet(self, event=None):
-        name = self.entry.get().strip()
-        if name:
-            self.label.configure(text=f"Hello, {name}!")
+    def signin(self, event=None):
+        username = self.entry.get().strip()
+        password = self.entry2.get()
+
+        if username == "Dan" and password == "1234":
+            self.label.configure(text=f"Hello, {username}!")
         else:
-            self.label.configure(text="Please enter your name.")
+            self.label.configure(text="Username or Password are incorrect.")
 
     def destroy(self):
         for after_id in self.tk.eval("after info").split():
